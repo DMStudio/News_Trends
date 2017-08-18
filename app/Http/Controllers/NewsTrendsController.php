@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 use App\Models\NewsTrends as News;
 
@@ -66,5 +67,20 @@ class NewsTrendsController extends Controller
     	} else {
     		return response()->json(['status' => '3', 'info' => '删除新闻失败']);
     	}
+    }
+
+    /**
+     * The test of uploading image.
+     *
+     * @return Response
+     */
+    public function test (Request $request) {
+        $file = Input::file('file');
+        $name = $request->name;
+        if ($file->isValid()) {
+            return response()->json(['info' => $file->getClientOriginalName(), 'name' => $name]);
+        } else {
+            return response()->json(['info' => '上传图片错误']);
+        }
     }
 }

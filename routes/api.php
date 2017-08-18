@@ -22,6 +22,7 @@ $api->version('v1', function ($api) {
 	$api->group(['namespace' => 'App\Http\Controllers'], function ($api) {
 		$api->get('/news_list/skip/{skip}/take/{take}', 'NewsTrendsController@index');
 		$api->post('/update_news', 'NewsTrendsController@update');
-		$api->post('/destroy_news', 'NewsTrendsController@destroy');
+        $api->post('/destroy_news', 'NewsTrendsController@destroy');
+		$api->post('/test', 'NewsTrendsController@test');
 	});
 });
