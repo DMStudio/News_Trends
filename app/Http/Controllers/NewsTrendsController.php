@@ -17,7 +17,9 @@ class NewsTrendsController extends Controller
      *
      * @return Response
      */
-    public function index ($skip = 1, $take = 99999) {
+    public function index (Request $request) {
+        $skip = $request->skip;
+        $take = $request->take;
     	$lists = News::select('id', 'title', 'content', 'views', 'type_id', 'img_url', 'created_at', 'updated_at')->orderBy('id', 'desc')->skip($skip-1)->take($take)->get();
     	return response()->json($lists);
     }
