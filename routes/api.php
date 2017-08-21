@@ -23,6 +23,6 @@ $api->version('v1', function ($api) {
 		$api->get('/news_list/skip/{skip}/take/{take}', 'NewsTrendsController@index');
 		$api->post('/update_news', 'NewsTrendsController@update');
         $api->post('/destroy_news', 'NewsTrendsController@destroy');
-		$api->post('/test', 'NewsTrendsController@test');
+		$api->post('/upload', 'NewsTrendsController@upload');
 	});
 });

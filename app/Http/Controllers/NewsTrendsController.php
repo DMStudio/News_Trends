@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -74,13 +75,18 @@ class NewsTrendsController extends Controller
      *
      * @return Response
      */
-    public function test (Request $request) {
-        $file = Input::file('file');
-        $name = $request->name;
-        if ($file->isValid()) {
-            return response()->json(['info' => $file->getClientOriginalName(), 'name' => $name]);
-        } else {
-            return response()->json(['info' => '上传图片错误']);
+    public function upload (Request $request) {
+        $file = $request->file('file');
+        $fileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+        $savePath = 'public/avatars/'.$fileName;
+        Storage::put(
+            $savePath,
+            file_get_contents($file->getRealPath())
+        );
+        if (!Storage::exists($savePath)) {
+            return response()->json(['info' => '上传错误']);
         }
+        $url = 'public/storage/avatars/'.$fileName;
+        return response()->json(['path' => asset($url)]);
     }
 }
