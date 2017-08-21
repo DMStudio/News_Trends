@@ -20,8 +20,8 @@ class NewsTrendsController extends Controller
     public function index (Request $request) {
         $skip = $request->skip;
         $take = $request->take;
-    	$lists = News::select('id', 'title', 'content', 'views', 'type_id', 'img_url', 'created_at', 'updated_at')->orderBy('id', 'desc')->skip($skip-1)->take($take)->get();
-    	return response()->json($lists);
+        $lists = News::select('id', 'title', 'content', 'views', 'type_id', 'img_url', 'created_at', 'updated_at')->orderBy('id', 'desc')->skip($skip-1)->take($take)->get();
+        return response()->json($lists);
     }
 
     /**
@@ -30,18 +30,18 @@ class NewsTrendsController extends Controller
      * @return Response
      */
     public function update (Request $request) {
-    	if (empty($request->id)) {
-	    	$news = new News();
+        if (empty($request->id)) {
+            $news = new News();
             $news->title = $request->title;
             $news->content = $request->content;
             $news->type_id = $request->type_id;
             $news->img_url = $request->img_url;
-	    	if ($news->save()) {
-	    		return response()->json(['status' => '0', 'info' => '添加新闻成功']);
-	    	} else {
-	    		return response()->json(['status' => '1', 'info' => '添加新闻失败']);
-	    	}
-    	} else {
+            if ($news->save()) {
+                return response()->json(['status' => '0', 'info' => '添加新闻成功']);
+            } else {
+                return response()->json(['status' => '1', 'info' => '添加新闻失败']);
+            }
+        } else {
             $news = News::firstOrCreate(['id' => $request->id]);
             $news->title = $request->title;
             $news->content = $request->content;
@@ -61,15 +61,15 @@ class NewsTrendsController extends Controller
      * @return Response
      */
     public function destroy (Request $request) {
-    	if (empty($request->id)) {
-    		return response()->json(['status' => '2', 'info' => 'ID不能为空']);
-    	}
-    	$result = News::whereIn('id', $request->id)->delete();
-    	if ($result) {
-    		return response()->json(['status' => '0', 'info' => '删除新闻成功']);
-    	} else {
-    		return response()->json(['status' => '3', 'info' => '删除新闻失败']);
-    	}
+        if (empty($request->id)) {
+            return response()->json(['status' => '2', 'info' => 'ID不能为空']);
+        }
+        $result = News::whereIn('id', $request->id)->delete();
+        if ($result) {
+            return response()->json(['status' => '0', 'info' => '删除新闻成功']);
+        } else {
+            return response()->json(['status' => '3', 'info' => '删除新闻失败']);
+        }
     }
 
     /**
