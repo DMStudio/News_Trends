@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
 	$api->group(['namespace' => 'App\Http\Controllers'], function ($api) {
-		$api->get('/news_list/skip/{skip}/take/{take}', 'NewsTrendsController@index');
+		$api->get('/news_list/{skip}/{take}', 'NewsTrendsController@index');
 		$api->post('/update_news', 'NewsTrendsController@update');
         $api->post('/destroy_news', 'NewsTrendsController@destroy');
 		$api->post('/upload', 'NewsTrendsController@upload');
